@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import SamplePage from "./\bpages/sample/SamplePage";
-import OnBoardingPage from "./\bpages/onBoarding/OnBoardingPage";
+import SamplePage from "./pages/sample/SamplePage";
+import OnBoardingPage from "./pages/onBoarding/OnBoardingPage";
 
 function App() {
 
