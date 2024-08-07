@@ -21,6 +21,7 @@ export default {
         black: '#000000',
         white: '#FFFFFF',
         placeholder: '#BFBFBF', // 3번의 placeholder와 동일
+        textGray: '#787878',
       },
       keyframes: {
         fadeIn: {
@@ -35,3 +36,4 @@ export default {
   },
   plugins: [],
 }
+
