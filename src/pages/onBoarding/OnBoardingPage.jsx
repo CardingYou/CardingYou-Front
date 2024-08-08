@@ -11,11 +11,16 @@ export default function OnBoardingPage() {
     navigate("/init");
   }
 
+  const locateOne = () => () => {
+    navigate("/one");
+  }
+
   return (
     <div>
     <div>CardingYou 시작 페이지입니다.</div>
     <button onClick={locateGuide()}>Guide 확인하기</button>
     <button onClick={locateInit()}>initPage 확인하기</button>
+    <button onClick={locateOne()}>one 확인하기</button>
     </div>
   )
 }
