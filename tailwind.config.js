@@ -20,6 +20,9 @@ export default {
         card_button: '#FFEAE9', // 카드 완성 후 '카드 만들기' 버튼 배경색과 동일
         black: '#000000',
         white: '#FFFFFF',
+        orange: '#FF9900',
+        purple: '#7E8BFF',
+        yellow: '#FFC165',
         placeholder: '#BFBFBF', // 3번의 placeholder와 동일
       },
       keyframes: {
