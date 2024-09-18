@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 
 export default function CardLetter() {
     const [date, setDate] = useState("yyyy.MM.dd");
+    const [open, setOpen] = useState(false);
 
   return (
     <div className="flex w-full flex-col text-center justify-center bg-[url('assets/images/card_bg.png')] bg-cover bg-center'">
@@ -9,8 +10,17 @@ export default function CardLetter() {
             <img src="assets/images/carding_for_you.png" alt="carding_for_you" />
             </div>
             <div className='mt-4 flex justify-center'>
-            <div className='relative w-[60%] pb-[79%] bg-white rounded-xl overflow-hidden'>
-                <img className='absolute top-0 left-0 w-full h-full object-cover' src="assets/images/sample_letter_img.png" alt="카드 이미지" />
+            <div className={`relative w-[60%] pb-[79%] bg-white rounded-xl overflow-hidden ${!open ? 'border-4 border-yellow' : ''}`}>
+                {
+                    open ? (
+                        <img className='absolute top-0 left-0 w-full h-full object-cover' src="assets/images/sample_letter_img.png" alt="카드 이미지" />
+                    ) : (
+                        <div className='py-10 text-black text-center font-xs'>
+                            사랑하는 엄마께,
+                            엄마, 안녕하세요?
+                        </div>
+                    )
+                }
             </div>
             </div>
             <div>
@@ -26,7 +36,7 @@ export default function CardLetter() {
             <button className='mr-4 bg-purple text-lg text-white rounded-3xl py-2 px-12 mt-6 font-semibold'>
                 다운로드
             </button>
-            <button className='bg-yellow text-lg text-white rounded-3xl py-2 px-12 font-semibold'>
+            <button className='bg-yellow text-lg text-white rounded-3xl py-2 px-12'>
                 공유하기
             </button>
             </div>
