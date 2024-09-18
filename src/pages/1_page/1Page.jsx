@@ -22,12 +22,12 @@ function OnePage() {
     };
 
     return (
-      <div className='w-full h-full bg-background p-6'>
+      <div className='w-full h-full bg-white p-6'>
           
             <div className='w-full h-10 flex items-center text-lg font-bold text-black'>
                 누구에게 카드를 전하고 싶나요?
             </div>
-            <div className="w-full h-auto flex flex-wrap justify-between">
+            <div className="w-full h-auto flex flex-wrap justify-between mt-2">
                 {['어머니', '아버지', '할머니', '할아버지', '친구', '직접 입력'].map((content, index) => (
                   <PersonBox
                     key={index}
@@ -42,7 +42,7 @@ function OnePage() {
             <div className='w-full h-10 flex items-center text-lg font-bold text-black'>
                 어떤 마음을 전하고 싶나요?
             </div>
-            <div className="w-full h-auto flex flex-wrap justify-between pl-7 pr-7">
+            <div className="w-full h-auto flex flex-wrap justify-between pl-7 pr-7 mt-2">
                 {['고마움', '미안함', '축하함', '반가움', '기쁨', '직접 입력'].map((content, index) => (
                   <EmotionBox
                     key={index}
