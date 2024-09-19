@@ -5,6 +5,9 @@ import { doc, getDoc, collection, getDocs, setDoc } from "firebase/firestore";
 export default function FirebaseTest() {
     const [imgUrl, setImgUrl] = useState("");
     const userUUID = "1";
+    const cardImgCollectionName = "cardImg";
+    const usersCollectionName = "users";
+    const letterUrlCollectionName = "finalLetterUrl";
 
     useEffect(() => {
         console.log(db);
@@ -15,21 +18,18 @@ export default function FirebaseTest() {
     async function fetchData() {
         try {
 
-            const fireStore = doc(db, "cardImg", "41");
+            const fireStore = doc(db, cardImgCollectionName, "41");
             const fireStoreData = await getDoc(fireStore);    
 
             if (fireStoreData.exists()) {
                 const data = fireStoreData.data();
-                console.log("Document data:", data);
                 
                 if (data.imgUrl) {
-                    console.log("Fetched imgUrl:", data.imgUrl);
+                    console.log("card img 확인 -> ", data.imgUrl);
                     setImgUrl(data.imgUrl);
                 } else {
                     console.log("imgUrl 필드가 없습니다.");
                 }
-            } else {
-                console.log("No such document!"); 
             }
         } catch (error) {
             console.error("Error fetching document:", error); 
@@ -39,7 +39,7 @@ export default function FirebaseTest() {
     // TODO 사용자 등록이 필요할 경우 실제 userUUID 받아오는 것으로 수정 
     async function uploadUser() {
         try {
-            const usersCollection = collection(db, "users");
+            const usersCollection = collection(db, usersCollectionName);
             const snapshot = await getDocs(usersCollection);
 
             let exists = false;
@@ -62,8 +62,8 @@ export default function FirebaseTest() {
                 console.log("userUUID 이미 존재함");
             } else {
                 const newDocId = (maxIndex + 1).toString();
-                await setDoc(doc(db, "users", newDocId), { uuid: userUUID });
-                console.log(`userUUID 추가: ${newDocId}`);
+                await setDoc(doc(db, usersCollectionName, newDocId), { uuid: userUUID });
+                console.log(`userUUID 추가 -> ${newDocId}`);
             }
         } catch (error) {
             console.error("UUID 업로드 에러 -> ", error);
@@ -72,7 +72,7 @@ export default function FirebaseTest() {
 
     async function uploadLetterUrl() {
         try {
-            const letterCollection = collection(db, "finalLetterUrl");
+            const letterCollection = collection(db, letterUrlCollectionName);
             const snapshot = await getDocs(letterCollection);
 
             let maxIndex = 0;
@@ -87,7 +87,7 @@ export default function FirebaseTest() {
             });
 
             const newDocId = (maxIndex + 1).toString();
-            await setDoc(doc(db, "finalLetterUrl", newDocId), { uuid: userUUID, letterUrl: imgUrl });
+            await setDoc(doc(db, letterUrlCollectionName, newDocId), { uuid: userUUID, letterUrl: imgUrl });
             console.log(`최종 편지 url 추가: ${newDocId}`);
 
         } catch (error) {
@@ -99,7 +99,8 @@ export default function FirebaseTest() {
         <div>
             <div>firebase 연동 테스트용</div>
             <div> <button onClick={uploadUser} ><u>사용자 uuid 저장</u> </button> </div>
-            <div> <button onClick={uploadLetterUrl} ><u>편지 이미지 저장</u> </button> </div>   // TODO 최종 편지지 서버통신 성공 시 자동 이미지 저장하는 것으로 수정 예정
+            {/* TODO 최종 편지지 서버통신 성공 시 자동 이미지 저장하는 것으로 수정 예정 */}
+            <div> <button onClick={uploadLetterUrl} ><u>편지 이미지 저장</u> </button> </div>
             {imgUrl && <img src={imgUrl} alt="Firestore에서 불러온 이미지" />}
         </div>
     )
