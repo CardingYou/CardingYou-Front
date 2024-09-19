@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { db } from "../../firebase";
-import { doc, getDoc } from "firebase/firestore"; 
+import { doc, getDoc, collection, getDocs, setDoc } from "firebase/firestore"; 
 
 export default function FirebaseTest() {
     const [imgUrl, setImgUrl] = useState("");
+    const userUUID = "2";
 
     useEffect(() => {
         console.log(db);
@@ -13,7 +14,7 @@ export default function FirebaseTest() {
     async function fetchData() {
         try {
 
-            const fireStore = doc(db, "cardImg", "42");
+            const fireStore = doc(db, "cardImg", "41");
             const fireStoreData = await getDoc(fireStore);    
 
             if (fireStoreData.exists()) {
@@ -34,9 +35,43 @@ export default function FirebaseTest() {
         }
     }
 
+    async function uploadUser() {
+        try {
+            const usersCollection = collection(db, "users");
+            const snapshot = await getDocs(usersCollection);
+
+            let exists = false;
+            let maxIndex = 0;
+
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const docId = parseInt(doc.id);
+
+                if (docId > maxIndex) {
+                    maxIndex = docId;
+                }
+
+                if (data.userId === userUUID) {
+                    exists = true;
+                }
+            });
+
+            if (exists) {
+                console.log("userUUID 이미 존재함");
+            } else {
+                const newDocId = (maxIndex + 1).toString();
+                await setDoc(doc(db, "users", newDocId), { uuid: userUUID });
+                console.log(`userUUID 추가: ${newDocId}`);
+            }
+        } catch (error) {
+            console.error("UUID 업로드 에러 -> ", error);
+        }
+    }
+
     return (
         <div>
             <div>firebase 연동 테스트용</div>
+            <div> <button onClick={uploadUser} >사용자 uuid 저장</button> </div>
             {imgUrl && <img src={imgUrl} alt="Firestore에서 불러온 이미지" />}
         </div>
     )
