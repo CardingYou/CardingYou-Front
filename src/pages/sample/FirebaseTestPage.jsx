@@ -4,13 +4,14 @@ import { doc, getDoc, collection, getDocs, setDoc } from "firebase/firestore";
 
 export default function FirebaseTest() {
     const [imgUrl, setImgUrl] = useState("");
-    const userUUID = "2";
+    const userUUID = "1";
 
     useEffect(() => {
         console.log(db);
         fetchData(); 
     }, []);
 
+    // TODO 최종 편지지 서버통신 완료 후 해당 로직 삭제 예정
     async function fetchData() {
         try {
 
@@ -35,6 +36,7 @@ export default function FirebaseTest() {
         }
     }
 
+    // TODO 사용자 등록이 필요할 경우 실제 userUUID 받아오는 것으로 수정 
     async function uploadUser() {
         try {
             const usersCollection = collection(db, "users");
@@ -68,10 +70,36 @@ export default function FirebaseTest() {
         }
     }
 
+    async function uploadLetterUrl() {
+        try {
+            const letterCollection = collection(db, "finalLetterUrl");
+            const snapshot = await getDocs(letterCollection);
+
+            let maxIndex = 0;
+
+            snapshot.forEach((doc) => {
+                const docId = parseInt(doc.id);
+
+                if (docId > maxIndex) {
+                    maxIndex = docId;
+                }
+
+            });
+
+            const newDocId = (maxIndex + 1).toString();
+            await setDoc(doc(db, "finalLetterUrl", newDocId), { uuid: userUUID, letterUrl: imgUrl });
+            console.log(`최종 편지 url 추가: ${newDocId}`);
+
+        } catch (error) {
+            console.error("최종 편지 url 업로드 에러 -> ", error);
+        }
+    }
+
     return (
         <div>
             <div>firebase 연동 테스트용</div>
-            <div> <button onClick={uploadUser} >사용자 uuid 저장</button> </div>
+            <div> <button onClick={uploadUser} ><u>사용자 uuid 저장</u> </button> </div>
+            <div> <button onClick={uploadLetterUrl} ><u>편지 이미지 저장</u> </button> </div>   // TODO 최종 편지지 서버통신 성공 시 자동 이미지 저장하는 것으로 수정 예정
             {imgUrl && <img src={imgUrl} alt="Firestore에서 불러온 이미지" />}
         </div>
     )
