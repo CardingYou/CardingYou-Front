@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'; 
+import { useState, useRef } from 'react'; 
 import NextButton from '../../components/onePage/nextButton';
 import PhraseBox from '../../components/twoPage/phraseBox';
 import { ReactComponent as Plus } from '../../assets/images/twoPage/Plus.svg';
