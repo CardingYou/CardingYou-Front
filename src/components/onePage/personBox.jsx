@@ -1,5 +1,4 @@
 
-
 // eslint-disable-next-line react/prop-types
 function PersonBox({ content, isInput, isSelected, onClick }) {
     return (

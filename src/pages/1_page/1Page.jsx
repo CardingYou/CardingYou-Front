@@ -64,6 +64,7 @@ function OnePage() {
             <div className='w-full h-5' />
             <div className='fixed bottom-4 right-8 w-full h-20 flex items-center justify-end'>
                 <NextButton className="mb-4 mr-4" />
+
             </div>
           
           
