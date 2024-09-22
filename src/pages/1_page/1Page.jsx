@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import { useState } from 'react'; 
 import PersonBox from '../../components/onePage/personBox';
 import EmotionBox from '../../components/onePage/emotionBox';
 import NextButton from '../../components/onePage/nextButton';
@@ -62,8 +62,9 @@ function OnePage() {
                 ))}
             </div>
             <div className='w-full h-5' />
-            <div className='w-full h-20 flex items-center justify-end'>
-                <NextButton />
+
+            <div className='fixed bottom-4 right-8 w-full h-20 flex items-center justify-end'>
+                <NextButton className="mb-4 mr-4" />
             </div>
           
           
