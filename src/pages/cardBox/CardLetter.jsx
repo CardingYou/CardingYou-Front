@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import useTextToSpeech from '../../utils/TTS/TextToSpeech';
 import { onClickDownloadImage } from '../../utils/image/DownloadImg';
 
