@@ -6,6 +6,7 @@ import OnePage from './pages/1_page/1Page';
 import Loading from "./pages/loading/Loading";
 import CardBox from "./pages/cardBox/CardBox";
 import CardLetter from "./pages/cardBox/CardLetter";
+import FirebaseTest from "./pages/sample/FirebaseTestPage";
 
 function App() {
 
@@ -19,6 +20,8 @@ function App() {
         <Route path="/loading" element={<Loading />} />
         <Route path="/card" element={<CardBox />} />
         <Route path="/letter" element={<CardLetter />} />
+        
+        <Route path="/testFirebase" element={<FirebaseTest />} />
       </Routes>
     </>
   )
