@@ -3,3 +3,23 @@
 @tailwind utilities;
     /* Font Style */
     /* Header */
+
+    .custom-rounded-left {
+        border-radius: 500px 0 0 500px; /* 왼쪽 모서리만 반원 형태로 둥글게 */
+        /* width: 200px; 적절한 너비 설정 */
+        /* height: 100px; 적절한 높이 설정 */
+        padding-left: 70px;
+        /* margin-left: 15vw; */
+      }
+
+      .translate-x-10vw {
+        transform: translateX(10vw);
+      }
+
+      .mt-10vh {
+        margin-top: 18vh;
+      }
+
+      .custom-rounded {
+        border-radius: 500px 500px 500px 500px;
+      }

@@ -24,6 +24,7 @@ export default {
         purple: '#7E8BFF',
         yellow: '#FFC165',
         placeholder: '#BFBFBF', // 3번의 placeholder와 동일
+        textGray: '#787878',
       },
       keyframes: {
         fadeIn: {
@@ -38,3 +39,4 @@ export default {
   },
   plugins: [],
 }
+
