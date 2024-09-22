@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
+import useTextToSpeech from '../../utils/TTS/TextToSpeech';
 
 export default function CardLetter() {
     const [date, setDate] = useState("yyyy.MM.dd");
     const [open, setOpen] = useState(false);
     const [content, setContent] = useState("사랑하는 엄마께, \n엄마, 안녕하세요?");
+    const { play } = useTextToSpeech(content); 
 
   return (
     <div className="flex w-full flex-col text-center justify-center bg-[url('assets/images/card_bg.png')] bg-cover bg-center'">
@@ -24,7 +26,10 @@ export default function CardLetter() {
             </div>
             </div>
             <div>
-            <button className='bg-white text-lg text-white rounded-2xl py-2 px-4 mt-10'>
+            <button 
+            onClick={play} 
+            className='bg-white text-lg text-white rounded-2xl py-2 px-4 mt-10'
+            >
                 <div className='flex'>
             <img className='mr-3' src="assets/images/speaker.png" alt="스피커" />
                 <p className='text-orange font-bold'>
