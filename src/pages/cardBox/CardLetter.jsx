@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import useTextToSpeech from '../../utils/TTS/TextToSpeech';
+import { onClickDownloadImage } from '../../utils/image/DownloadImg';
 
 export default function CardLetter() {
     const [date, setDate] = useState("yyyy.MM.dd");
@@ -8,7 +9,7 @@ export default function CardLetter() {
     const { play } = useTextToSpeech(content); 
 
   return (
-    <div className="flex w-full flex-col text-center justify-center bg-[url('assets/images/card_bg.png')] bg-cover bg-center'">
+    <div className="flex w-full flex-col text-center justify-center bg-[url('assets/images/card_bg.png')] bg-cover bg-center'" id="download">
             <div className='flex justify-center'>
             <img src="assets/images/carding_for_you.png" alt="carding_for_you" />
             </div>
@@ -38,7 +39,10 @@ export default function CardLetter() {
                 </div>
             </button>
             <div>
-            <button className='mr-4 bg-purple text-lg text-white rounded-3xl py-2 px-12 mt-6 font-semibold'>
+            <button 
+            onClick={onClickDownloadImage}
+            className='mr-4 bg-purple text-lg text-white rounded-3xl py-2 px-12 mt-6 font-semibold'
+            >
                 다운로드
             </button>
             <button className='bg-yellow text-lg text-white rounded-3xl py-2 px-12'>
