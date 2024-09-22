@@ -1,4 +1,3 @@
-import React from 'react';
 
 // eslint-disable-next-line react/prop-types
 function PersonBox({ content, isInput, isSelected, onClick }) {
@@ -7,7 +6,7 @@ function PersonBox({ content, isInput, isSelected, onClick }) {
         onClick={onClick}
         className={`w-[48%] h-14 flex items-center justify-center text-lg font-bold mt-2 mb-2 rounded-full shadow`}
         style={{
-          backgroundColor: isSelected ? '#FFA0B2' : 'white', // 선택되었을 때 배경색 변경
+          backgroundColor: isSelected ? '#FF6F8B' : 'white', // 선택되었을 때 배경색 변경
           color: isSelected ? 'white' : '#FF6F8B', // 선택되었을 때 글씨 색상 변경
           border: isSelected ? 'none' : '1px solid #FF6F8B'
         }}

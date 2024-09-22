@@ -1,4 +1,3 @@
-import React from 'react'; 
 
 // eslint-disable-next-line react/prop-types
 function EmotionBox({ content, isInput, Icon, isSelected, onClick }) {
