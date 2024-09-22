@@ -43,6 +43,27 @@ function TwoPage() {
         setSelectedPhrase(index);
     };
 
+    const uploadImgToFB = async () => {
+
+        if (!imageFile) {
+            console.error("[uploadImgToFB] 파일 없음");
+            return;
+        }
+        
+        try {;
+            const fileReference = ref(storage, `userPersonalImg/${imageFile.name}`);
+            const uploadResult = await uploadString(fileReference, imageFile);
+            console.log(`[uploadImgToFB] response -> ${uploadResult.metadata.fullPath}`);
+
+            const downloadURL = await getDownloadURL(fileReference);
+            setfbImgUrl(downloadURL);
+            console.log(`[uploadImgToFB] downloadURL-> ${downloadURL}`);
+
+        } catch (error) {
+            console.error("Error uploading file: ", error);
+        }
+    };
+
     return (
       <div className='w-full h-full bg-white p-6'>
           
