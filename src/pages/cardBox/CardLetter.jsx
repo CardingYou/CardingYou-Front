@@ -2,8 +2,14 @@ import {useState} from 'react'
 import useTextToSpeech from '../../utils/TTS/TextToSpeech';
 import { onClickDownloadImage } from '../../utils/image/DownloadImg';
 import { getCurrentDate } from '../../utils/date/getCurrentDate';
+import { useLocation } from 'react-router-dom';
 
 export default function CardLetter() {
+    const location = useLocation();
+    const cardData = location.state; // navigate로 전달된 데이터 접근
+
+    console.log(cardData.content);
+
     const date = getCurrentDate();
     const [flipped, setFlipped] = useState(false);
     const [content, setContent] = useState("사랑하는 엄마께, \n엄마, 안녕하세요?");

@@ -1,7 +1,18 @@
-import React, {useState} from 'react'
+import { useNavigate } from 'react-router-dom';
+import { getCurrentDate } from '../../utils/date/getCurrentDate';
 
 export default function CardBox() {
-    const [date, setDate] = useState("yyyy.MM.dd");
+  const navigate = useNavigate();
+  const date = getCurrentDate();
+
+  const handleNavigate = () => {
+    const cardData = {
+        content: "사랑하는 엄마께, \n엄마, 안녕하세요?",
+        imageUrl: "assets/images/sample_letter_img.png",
+        date: date
+      };
+    navigate('/letter', { state: cardData }); // '/next-page'를 원하는 경로로 변경
+  };
 
   return (
     <div className="flex w-full flex-col text-center justify-center bg-[url('assets/images/card_bg.png')] bg-cover bg-center'">
@@ -15,7 +26,10 @@ export default function CardBox() {
             <img src="assets/images/card.png" alt="카드 이미지" />
             </div>
             <div>
-            <button className='bg-primary text-lg text-white rounded-3xl py-2 px-12 mt-10'>
+            <button 
+            onClick={handleNavigate} 
+            className='bg-primary text-lg text-white rounded-3xl py-2 px-12 mt-10'
+            >
                 확인하기
             </button>
             <div className='absolute bottom-0 mb-10 pr-6 w-full flex justify-end'>
