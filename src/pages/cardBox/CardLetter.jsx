@@ -1,20 +1,21 @@
 import {useState} from 'react'
 import useTextToSpeech from '../../utils/TTS/TextToSpeech';
 import { onClickDownloadImage } from '../../utils/image/DownloadImg';
-import { getCurrentDate } from '../../utils/date/getCurrentDate';
+import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 export default function CardLetter() {
     const location = useLocation();
+    const navigate = useNavigate();
     const cardData = location.state; // navigate로 전달된 데이터 접근
 
-    console.log(cardData.content);
+    if(!cardData || cardData == null || cardData == undefined) {
+        alert("카드 데이터를 받아오는 데 실패하였습니다 ! ");
+        navigate("/"); // 처음으로 이동
+    } 
 
-    const date = getCurrentDate();
     const [flipped, setFlipped] = useState(false);
-    const [content, setContent] = useState("사랑하는 엄마께, \n엄마, 안녕하세요?");
-    const [imageUrl, setImageUrl] = useState("assets/images/sample_letter_img.png")
-    const { play } = useTextToSpeech(content); 
+    const { play } = useTextToSpeech(cardData.content); 
 
   return (
     <div className="flex w-full flex-col text-center justify-center bg-[url('assets/images/card_bg.png')] bg-cover bg-center'" id="download">
@@ -45,7 +46,7 @@ export default function CardLetter() {
                         }}
                     >
                         <div className='py-10 px-5 text-black text-left font-xs whitespace-pre-wrap'>
-                            {content}
+                            {cardData.content}
                         </div>
                     </div>
 
@@ -57,7 +58,7 @@ export default function CardLetter() {
                         transform: 'rotateY(180deg)',
                     }}
                     >
-                        <img className='absolute top-0 left-0 w-full h-full object-cover' src={imageUrl} alt="카드 이미지" />
+                        <img className='absolute top-0 left-0 w-full h-full object-cover' src={cardData.imageUrl} alt="카드 이미지" />
                     </div>
                 </div>
             </div>
@@ -87,7 +88,7 @@ export default function CardLetter() {
             </div>
             <div className='absolute bottom-0 mb-10 pr-6 w-full flex justify-end'>
                 <p className='text-[#FCCC63] font-normal text-4xl'>
-                    {date}
+                    {cardData.date}
                 </p>
             </div>
             </div>
