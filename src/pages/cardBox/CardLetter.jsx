@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 export default function CardLetter() {
     const [date, setDate] = useState("yyyy.MM.dd");
     const [open, setOpen] = useState(false);
+    const [content, setContent] = useState("사랑하는 엄마께, \n엄마, 안녕하세요?");
 
   return (
     <div className="flex w-full flex-col text-center justify-center bg-[url('assets/images/card_bg.png')] bg-cover bg-center'">
@@ -15,9 +16,8 @@ export default function CardLetter() {
                     open ? (
                         <img className='absolute top-0 left-0 w-full h-full object-cover' src="assets/images/sample_letter_img.png" alt="카드 이미지" />
                     ) : (
-                        <div className='py-10 text-black text-center font-xs'>
-                            사랑하는 엄마께,
-                            엄마, 안녕하세요?
+                        <div className='py-10 px-5 text-black text-left font-xs whitespace-pre-wrap'>
+                            {content}
                         </div>
                     )
                 }
