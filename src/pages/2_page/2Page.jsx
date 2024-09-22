@@ -3,7 +3,8 @@ import NextButton from '../../components/onePage/nextButton';
 import PhraseBox from '../../components/twoPage/phraseBox';
 import { ReactComponent as Plus } from '../../assets/images/twoPage/Plus.svg';
 import { storage } from '../../firebase';
-import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes, uploadString } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
 
 function TwoPage() {
     const [uploadedImage, setUploadedImage] = useState(null);
@@ -50,9 +51,9 @@ function TwoPage() {
             return;
         }
         
-        try {;
-            const fileReference = ref(storage, `userPersonalImg/${imageFile.name}`);
-            const uploadResult = await uploadString(fileReference, imageFile);
+        try {
+            const fileReference = ref(storage, `userPersonalImg/${uuidv4()}`);
+            const uploadResult = await uploadBytes(fileReference, imageFile);
             console.log(`[uploadImgToFB] response -> ${uploadResult.metadata.fullPath}`);
 
             const downloadURL = await getDownloadURL(fileReference);
