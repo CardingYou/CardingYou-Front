@@ -2,9 +2,13 @@ import { useState, useRef } from 'react';
 import NextButton from '../../components/onePage/nextButton';
 import PhraseBox from '../../components/twoPage/phraseBox';
 import { ReactComponent as Plus } from '../../assets/images/twoPage/Plus.svg';
+import { storage } from '../../firebase';
+import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 
 function TwoPage() {
     const [uploadedImage, setUploadedImage] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
+    const [fbImgUrl, setfbImgUrl] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const fileInputRef = useRef(null);
 
@@ -19,6 +23,7 @@ function TwoPage() {
         if (file) {
             const imageUrl = URL.createObjectURL(file);
             setUploadedImage(imageUrl);
+            setImageFile(file);
         }
     };
 
@@ -115,7 +120,8 @@ function TwoPage() {
 
             <div className='w-full h-5' />
             <div className='fixed bottom-4 right-8 w-full h-20 flex items-center justify-end'>
-                <NextButton className="mb-4 mr-4" />
+                <NextButton className="mb-4 mr-4"
+                onClick={() => uploadImgToFB() } />
             </div>
 
       </div>
