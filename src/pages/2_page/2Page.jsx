@@ -1,4 +1,6 @@
 import { useState, useRef } from 'react'; 
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import NextButton from '../../components/onePage/nextButton';
 import PhraseBox from '../../components/twoPage/phraseBox';
 import { ReactComponent as Plus } from '../../assets/images/twoPage/Plus.svg';
@@ -7,6 +9,17 @@ import { getDownloadURL, ref, uploadBytes, uploadString } from 'firebase/storage
 import { v4 as uuidv4 } from 'uuid';
 
 function TwoPage() {
+    const location = useLocation();
+    const { target, sentiment } = location.state || {};
+
+    const [selectedType, setSelectedType] = useState(null);
+    const type = ['명언 넣기', '성경 구절', '노래 가사', '없음'][selectedType];
+
+    const handlePhraseClick = (index) => {
+        setSelectedType(index);
+    };
+
+    const navigate = useNavigate(); 
     const [uploadedImage, setUploadedImage] = useState(null);
     const [imageFile, setImageFile] = useState(null);
     const [fbImgUrl, setfbImgUrl] = useState(null);
@@ -38,10 +51,36 @@ function TwoPage() {
         setIsModalOpen(false);
     };
 
-    const [selectedPhrase, setSelectedPhrase] = useState(null);
+    const postCardData = async () => {
+        const formData = new FormData();
+        formData.append('target', target);
+        formData.append('sentiment', sentiment);
+        formData.append('type', type);
+        if (fileInputRef.current.files[0]) {
+            formData.append('image', fileInputRef.current.files[0]); // 실제 파일 전송
+        }
 
-    const handlePhraseClick = (index) => {
-        setSelectedPhrase(index);
+        try {
+            const response = await axios.post('/api/create/phrase', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            if (response.status === 200) {
+                console.log('Successfully posted:', response.data);
+                // 데이터 전송 후 페이지 이동
+                navigate('/three');
+            } else {
+                console.error('Failed to post data:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error posting data:', error);
+        }
+    };
+
+    const handleNextClick = () => {
+        postCardData();  // 데이터를 POST하고 다음 페이지로 이동
     };
 
     const uploadImgToFB = async () => {
@@ -66,8 +105,7 @@ function TwoPage() {
     };
 
     return (
-      <div className='w-full h-full bg-white p-6'>
-          
+        <div className='w-full h-full bg-white p-6'>
             <div className='w-full h-10 flex items-center text-lg font-bold text-black'>
                 카드 표지에 사진을 추가하시겠어요?
             </div>
@@ -130,14 +168,14 @@ function TwoPage() {
                 좋은 문구를 추가할 수 있습니다.
             </div>
             <div className='w-128 min-h-32 flex flex-col items-center justify-center rounded-2xl ml-4 mr-4 mt-4'>
-            {['명언 넣기', '성경 구절', '노래 가사', '없음'].map((content, index) => (
-                <PhraseBox
-                key={index}
-                content={content}
-                isSelected={selectedPhrase === index}
-                onClick={() => handlePhraseClick(index)}
-                />
-            ))}
+                {['명언 넣기', '성경 구절', '노래 가사', '없음'].map((content, index) => (
+                    <PhraseBox
+                    key={index}
+                    content={content}
+                    isSelected={selectedType === index}
+                    onClick={() => handlePhraseClick(index)}
+                    />
+                ))}
             </div>
 
             <div className='w-full h-5' />
@@ -145,8 +183,7 @@ function TwoPage() {
                 <NextButton className="mb-4 mr-4"
                 onClick={() => uploadImgToFB() } />
             </div>
-
-      </div>
+        </div>
     );
 }
 

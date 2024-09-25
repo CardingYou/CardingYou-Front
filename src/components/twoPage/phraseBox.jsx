@@ -13,7 +13,7 @@ function PhraseBox({ content, isSelected, onClick }) {
                 ${isNone ? 'rounded-b-2xl' : ''}`}
             style={{
                 height: '3rem',
-                backgroundColor: isSelected ? '#FFA0B2' : 'white',
+                backgroundColor: isSelected ? '#FF6F8B' : 'white',
                 color: isSelected ? 'white' : '#FF7074',
                 border: isSelected ? 'none' : '0.5px solid #FF6F8B'
             }}
