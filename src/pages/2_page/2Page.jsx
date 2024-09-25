@@ -4,6 +4,9 @@ import axios from 'axios';
 import NextButton from '../../components/onePage/nextButton';
 import PhraseBox from '../../components/twoPage/phraseBox';
 import { ReactComponent as Plus } from '../../assets/images/twoPage/Plus.svg';
+import { storage } from '../../firebase';
+import { getDownloadURL, ref, uploadBytes, uploadString } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
 
 function TwoPage() {
     const location = useLocation();
@@ -18,6 +21,8 @@ function TwoPage() {
 
     const navigate = useNavigate(); 
     const [uploadedImage, setUploadedImage] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
+    const [fbImgUrl, setfbImgUrl] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const fileInputRef = useRef(null);
 
@@ -32,6 +37,7 @@ function TwoPage() {
         if (file) {
             const imageUrl = URL.createObjectURL(file);
             setUploadedImage(imageUrl);
+            setImageFile(file);
         }
     };
 
@@ -77,6 +83,26 @@ function TwoPage() {
         postCardData();  // 데이터를 POST하고 다음 페이지로 이동
     };
 
+    const uploadImgToFB = async () => {
+
+        if (!imageFile) {
+            console.error("[uploadImgToFB] 파일 없음");
+            return;
+        }
+        
+        try {
+            const fileReference = ref(storage, `userPersonalImg/${uuidv4()}`);
+            const uploadResult = await uploadBytes(fileReference, imageFile);
+            console.log(`[uploadImgToFB] response -> ${uploadResult.metadata.fullPath}`);
+
+            const downloadURL = await getDownloadURL(fileReference);
+            setfbImgUrl(downloadURL);
+            console.log(`[uploadImgToFB] downloadURL-> ${downloadURL}`);
+
+        } catch (error) {
+            console.error("Error uploading file: ", error);
+        }
+    };
 
     return (
         <div className='w-full h-full bg-white p-6'>
@@ -153,10 +179,9 @@ function TwoPage() {
             </div>
 
             <div className='w-full h-5' />
-            <div 
-                className='fixed bottom-4 right-8 w-full h-20 flex items-center justify-end'
-                onClick={handleNextClick}>
-                <NextButton className="mb-4 mr-4" />
+            <div className='fixed bottom-4 right-8 w-full h-20 flex items-center justify-end'>
+                <NextButton className="mb-4 mr-4"
+                onClick={() => uploadImgToFB() } />
             </div>
         </div>
     );

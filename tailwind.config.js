@@ -20,6 +20,9 @@ export default {
         card_button: '#FFEAE9', // 카드 완성 후 '카드 만들기' 버튼 배경색과 동일
         black: '#000000',
         white: '#FFFFFF',
+        orange: '#FF9900',
+        purple: '#7E8BFF',
+        yellow: '#FFC165',
         placeholder: '#BFBFBF', // 3번의 placeholder와 동일
         textGray: '#787878',
       },
@@ -32,8 +35,27 @@ export default {
       animation: {
         fadeIn: 'fadeIn 1s forwards',
       },
+      transform: {
+        'rotate-y-180': 'rotateY(180deg)',
+      },
+      perspective: {
+        '1000': '1000px',
+      },
+      transformStyle: {
+        '3d': 'preserve-3d',
+      },
+      backfaceVisibility: {
+        'hidden': 'hidden',
+      },
+      transitionProperty: {
+        'transform': 'transform',
+      },
     },
   },
   plugins: [],
+  variants: {
+    extend: {
+      transform: ['responsive', 'hover', 'focus'],
+    },
+  },
 }
-
