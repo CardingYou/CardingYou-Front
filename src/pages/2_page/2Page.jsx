@@ -5,7 +5,7 @@ import NextButton from '../../components/onePage/nextButton';
 import PhraseBox from '../../components/twoPage/phraseBox';
 import { ReactComponent as Plus } from '../../assets/images/twoPage/Plus.svg';
 import { storage } from '../../firebase';
-import { getDownloadURL, ref, uploadBytes, uploadString } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 
 function TwoPage() {
@@ -52,21 +52,24 @@ function TwoPage() {
     };
 
     const postCardData = async () => {
-        const formData = new FormData();
-        formData.append('target', target);
-        formData.append('sentiment', sentiment);
-        formData.append('type', type);
-        if (fileInputRef.current.files[0]) {
-            formData.append('image', fileInputRef.current.files[0]); // 실제 파일 전송
+        // 이미지 URL이 존재하는지 확인
+        if (!fbImgUrl) {
+            console.error('Image URL not found. Make sure to upload the image first.');
+            return;
         }
-
+    
         try {
-            const response = await axios.post('/api/create/phrase', formData, {
+            const response = await axios.post('/api/create/phrase', {
+                target: target,          
+                sentiment: sentiment,    
+                type: type,              
+                image_url: fbImgUrl,     
+            }, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json',
                 },
             });
-
+    
             if (response.status === 200) {
                 console.log('Successfully posted:', response.data);
                 // 데이터 전송 후 페이지 이동
@@ -77,10 +80,6 @@ function TwoPage() {
         } catch (error) {
             console.error('Error posting data:', error);
         }
-    };
-
-    const handleNextClick = () => {
-        postCardData();  // 데이터를 POST하고 다음 페이지로 이동
     };
 
     const uploadImgToFB = async () => {
@@ -98,7 +97,8 @@ function TwoPage() {
             const downloadURL = await getDownloadURL(fileReference);
             setfbImgUrl(downloadURL);
             console.log(`[uploadImgToFB] downloadURL-> ${downloadURL}`);
-
+            postCardData();
+            navigate('/three');
         } catch (error) {
             console.error("Error uploading file: ", error);
         }
@@ -119,9 +119,9 @@ function TwoPage() {
               onClick={uploadedImage ? openModal : handleClick} // 이미지가 있으면 모달 열기, 없으면 파일 선택창 열기
             >
                 {uploadedImage ? (
-                    <img 
-                      src={uploadedImage} 
-                      alt="Uploaded" 
+                    <img
+                      src={uploadedImage}
+                      alt="Uploaded"
                       className="w-64 h-64 object-cover rounded-xl"
                     />
                 ) : (
@@ -179,9 +179,9 @@ function TwoPage() {
             </div>
 
             <div className='w-full h-5' />
-            <div className='fixed bottom-4 right-8 w-full h-20 flex items-center justify-end'>
+            <div className='fixed bottom-4 right-8 w-full h-20 flex items-center justify-end' onClick={() => uploadImgToFB() } >
                 <NextButton className="mb-4 mr-4"
-                onClick={() => uploadImgToFB() } />
+                />
             </div>
         </div>
     );

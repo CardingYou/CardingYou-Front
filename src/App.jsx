@@ -8,6 +8,7 @@ import CardBox from "./pages/cardBox/CardBox";
 import CardLetter from "./pages/cardBox/CardLetter";
 import FirebaseTest from "./pages/sample/FirebaseTestPage";
 import TwoPage from "./pages/2_page/2Page";
+import ThreePage from "./pages/3_page/3Page";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/init" element={<InitPage />} />
         <Route path="/one" element={<OnePage />} />
         <Route path="/two" element={<TwoPage />} />
+        <Route path='/three' element={<ThreePage />} />
         <Route path="/loading" element={<Loading />} />
         <Route path="/card" element={<CardBox />} />
         <Route path="/letter" element={<CardLetter />} />
