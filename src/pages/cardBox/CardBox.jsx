@@ -1,9 +1,14 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getCurrentDate } from '../../utils/date/getCurrentDate';
 
 export default function CardBox() {
   const navigate = useNavigate();
   const date = getCurrentDate();
+
+  const location = useLocation();
+  const response = location.state;
+
+  console.log(response); // 데이터 확인 필요
 
   const handleNavigate = () => {
     const cardData = {
@@ -11,7 +16,7 @@ export default function CardBox() {
         imageUrl: "assets/images/sample_letter_img.png",
         date: date
       };
-    navigate('/letter', { state: cardData }); // '/next-page'를 원하는 경로로 변경
+    navigate('/letter', { state: cardData });
   };
 
   return (
