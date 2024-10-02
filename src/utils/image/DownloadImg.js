@@ -6,8 +6,14 @@ export const onClickDownloadImage = () => {
     return alert("사진 저장에 실패했습니다.");
   }
 
-  // 다운로드에서 제외할 요소 선택
+  // 요소 선택
   const buttonsToExclude = target.querySelectorAll('button');
+  const imagesToFlip = target.querySelectorAll('img');
+
+  // 이미지 좌우 반전 - 이미지가 반전되어 저장되는 에러 fix
+  imagesToFlip.forEach((img) => {
+    img.style.transform = 'scaleX(-1)';
+  });
 
   // 버튼 요소 숨기기 및 원래 display 값 저장
   const originalDisplayStyles = [];
@@ -28,5 +34,10 @@ export const onClickDownloadImage = () => {
   // 캡처 후 버튼 요소 원래 display 값 복원
   buttonsToExclude.forEach((button, index) => {
     button.style.display = originalDisplayStyles[index];
+  });
+
+  // 좌우 반전 복원
+  imagesToFlip.forEach((img) => {
+    img.style.transform = '';
   });
 };
