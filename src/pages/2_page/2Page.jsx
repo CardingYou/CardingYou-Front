@@ -73,7 +73,7 @@ function TwoPage() {
             if (response.status === 200) {
                 console.log('Successfully posted:', response.data);
                 // 데이터 전송 후 페이지 이동
-                navigate('/three');
+                navigate('/three', { state: response.data });
             } else {
                 console.error('Failed to post data:', response.statusText);
             }
