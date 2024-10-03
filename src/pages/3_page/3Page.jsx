@@ -30,7 +30,7 @@ function ThreePage() {
         const type = selectedOption === 'direct' ? 'custom' : 'AI';
         try {
             const response = await axios.post(`/api/create/letter/type=${type}`, { context: letterContent });
-            setResponseContent(response.data.letter); // 받은 응답을 두 번째 textarea에 설정
+            setResponseContent(response.data.letter); 
             console.log(response.data.letter);
         } catch (error) {
             console.error('There was an error!', error);
@@ -108,7 +108,7 @@ function ThreePage() {
                   className='w-10/12 min-h-52 mt-4 p-2 text-sm text-black border-2 border-emphatic rounded-2xl outline-none'
                   placeholder={selectedOption === 'ai' ? "AI 편지 생성을 위한 프롬프트를 입력" : "편지 내용을 입력해주세요."}
                   value={letterContent}
-                  onChange={(e) => setLetterContent(e.target.value)} // 내용 상태 업데이트
+                  onChange={(e) => setLetterContent(e.target.value)} 
               />
           </div>
           <div className='w-full h-20 flex items-center justify-center' onClick={handleSubmit}>
@@ -118,7 +118,7 @@ function ThreePage() {
               <textarea 
                   className='w-10/12 min-h-52 p-2 text-sm text-black border-2 border-emphatic rounded-2xl outline-none'
                   value={responseContent}
-                  readOnly // 응답 텍스트는 읽기 전용
+                  onChange={(e) => setResponseContent(e.target.value)}
               />
           </div>
 
