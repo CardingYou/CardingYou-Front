@@ -43,7 +43,7 @@ function ThreePage() {
             setLoading(true); 
             setTimeout(() => {
                 setLoading(false);
-                navigate('/card', { state: { ...response, responseContent, ...selectedColor } });
+                navigate('/card', { state: { ...response, responseContent, selectedColor } });
             }, 2000); 
         }
     }

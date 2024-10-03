@@ -1,13 +1,17 @@
 import {useState} from 'react'
 import useTextToSpeech from '../../utils/TTS/TextToSpeech';
 import { onClickDownloadImage } from '../../utils/image/DownloadImg';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 
 export default function CardLetter() {
+    const { randomPath } = useParams(); // 경로 접근
+    console.log('path 확인 : ', randomPath);
+
     const location = useLocation();
     const navigate = useNavigate();
     const response = location.state; // navigate로 전달된 데이터 접근
+
+    console.log(response.imgURL);
 
     if(!response || response == null || response == undefined) {
         alert("카드 데이터를 받아오는 데 실패하였습니다 ! ");
@@ -24,7 +28,7 @@ export default function CardLetter() {
   return (
     <div className="flex w-full flex-col text-center justify-center bg-[url('assets/images/card_bg.png')] bg-cover bg-center'" id="download">
             <div className='flex justify-center'>
-            <img src="assets/images/carding_for_you.png" alt="carding_for_you" />
+            <img src="/assets/images/carding_for_you.png" alt="carding_for_you" />
             </div>
             <div className='mt-4 flex justify-center'>
                 <div 
@@ -74,7 +78,7 @@ export default function CardLetter() {
             className='bg-white text-lg text-white rounded-2xl py-2 px-4 mt-10'
             >
                 <div className='flex'>
-            <img className='mr-3' src="assets/images/speaker.png" alt="스피커" />
+            <img className='mr-3' src="/assets/images/speaker.png" alt="스피커" />
                 <p className='text-orange font-bold'>
                 음성으로 듣기
                 </p>

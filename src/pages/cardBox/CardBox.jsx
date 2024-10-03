@@ -8,8 +8,13 @@ export default function CardBox() {
   const location = useLocation();
   const response = location.state;
 
+  console.log(response);
+
+  const regex = /userPersonalImg%2F(.*?)\?alt=/;
+  const randomPath = response.imgURL.match(regex);
+
   const handleNavigate = () => {
-    navigate('/letter', { state: { ...response, ...date } });
+    navigate(`/letter/${randomPath}`, { state: { ...response, date } });
   };
 
   return (
