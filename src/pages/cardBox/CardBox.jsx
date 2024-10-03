@@ -8,15 +8,8 @@ export default function CardBox() {
   const location = useLocation();
   const response = location.state;
 
-  console.log('response: ', response); // 데이터 확인 필요
-
   const handleNavigate = () => {
-    const cardData = {
-        content: "사랑하는 엄마께, \n엄마, 안녕하세요?",
-        imageUrl: "assets/images/sample_letter_img.png",
-        date: date
-      };
-    navigate('/letter', { state: { ...cardData, ...date } });
+    navigate('/letter', { state: { ...response, ...date } });
   };
 
   return (
