@@ -38,12 +38,12 @@ function ThreePage() {
     };
 
     // 편지지로 이동
-    const navigateLetter = async () => {
+    const navigateLetter = () => {
         if (response != null && responseContent !== '') {
             setLoading(true); 
             setTimeout(() => {
                 setLoading(false);
-                navigate('/letter', { state: { ...response, responseContent } });
+                navigate('/letter', { state: { ...response, responseContent, ...selectedColor } });
             }, 2000); 
         }
     }

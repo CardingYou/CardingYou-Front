@@ -7,15 +7,19 @@ import { useLocation } from 'react-router-dom';
 export default function CardLetter() {
     const location = useLocation();
     const navigate = useNavigate();
-    const cardData = location.state; // navigate로 전달된 데이터 접근
+    const response = location.state; // navigate로 전달된 데이터 접근
 
-    if(!cardData || cardData == null || cardData == undefined) {
+    if(!response || response == null || response == undefined) {
         alert("카드 데이터를 받아오는 데 실패하였습니다 ! ");
         navigate("/"); // 처음으로 이동
     } 
 
     const [flipped, setFlipped] = useState(false);
-    const { play } = useTextToSpeech(cardData.content); 
+    const { play } = useTextToSpeech(response.responseContent); 
+
+    const DownLoadImage = () => {
+        onClickDownloadImage(flipped);
+    }
 
   return (
     <div className="flex w-full flex-col text-center justify-center bg-[url('assets/images/card_bg.png')] bg-cover bg-center'" id="download">
@@ -24,7 +28,7 @@ export default function CardLetter() {
             </div>
             <div className='mt-4 flex justify-center'>
                 <div 
-                className={`relative w-[60%] pb-[79%] bg-white rounded-xl overflow-hidden ${flipped ? '' : 'border-4 border-yellow'}`}
+                className={`relative w-[60%] pb-[79%] bg-white rounded-xl overflow-hidden ${flipped ? '' : `border-4 border-[#${response.selectedColor}]`}`}
                 onClick={() => setFlipped(!flipped)} 
                 style={{
                     perspective: '1000px'
@@ -44,9 +48,10 @@ export default function CardLetter() {
                             backfaceVisibility: 'hidden',
                             transform: 'rotateY(0deg)',
                         }}
+                        id='textArea'
                     >
                         <div className='py-10 px-5 text-black text-left font-xs whitespace-pre-wrap'>
-                            {cardData.content}
+                            {response.responseContent}
                         </div>
                     </div>
 
@@ -58,7 +63,7 @@ export default function CardLetter() {
                         transform: 'rotateY(180deg)',
                     }}
                     >
-                        <img className='absolute top-0 left-0 w-full h-full object-cover' src={cardData.imageUrl} alt="카드 이미지" />
+                        <img className='absolute top-0 left-0 w-full h-full object-cover' src={response.imgURL} alt="카드 이미지" />
                     </div>
                 </div>
             </div>
@@ -77,7 +82,7 @@ export default function CardLetter() {
             </button>
             <div>
             <button 
-            onClick={onClickDownloadImage}
+            onClick={DownLoadImage}
             className='mr-4 bg-purple text-lg text-white rounded-3xl py-2 px-12 mt-6 font-semibold'
             >
                 다운로드
@@ -88,7 +93,7 @@ export default function CardLetter() {
             </div>
             <div className='absolute bottom-0 mb-10 pr-6 w-full flex justify-end'>
                 <p className='text-[#FCCC63] font-normal text-4xl'>
-                    {cardData.date}
+                    {response.date}
                 </p>
             </div>
             </div>

@@ -8,7 +8,7 @@ export default function CardBox() {
   const location = useLocation();
   const response = location.state;
 
-  console.log(response); // 데이터 확인 필요
+  console.log('response: ', response); // 데이터 확인 필요
 
   const handleNavigate = () => {
     const cardData = {
@@ -16,7 +16,7 @@ export default function CardBox() {
         imageUrl: "assets/images/sample_letter_img.png",
         date: date
       };
-    navigate('/letter', { state: cardData });
+    navigate('/letter', { state: { ...cardData, ...date } });
   };
 
   return (
