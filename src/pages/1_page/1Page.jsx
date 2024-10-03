@@ -62,24 +62,25 @@ function OnePage() {
           어떤 마음을 전하고 싶나요?
       </div>
       <div className="w-full h-auto flex flex-wrap justify-between pl-7 pr-7 mt-2">
-          {['고마움', '미안함', '축하함', '반가움', '기쁨', '직접 입력'].map((content, index) => (
-            <EmotionBox
-              key={index}
-              content={content}
-              Icon={
-                content === '고마움' ? Thanks :
-                content === '미안함' ? Sorry :
-                content === '축하함' ? Congratulation :
-                content === '반가움' ? Delight :
-                content === '기쁨' ? Joy :
-                Question
-              }
-              isInput={content === '직접 입력'}
-              isSelected={selectedEmotion === index}
-              onClick={() => handleEmotionClick(index)}
-            />
-          ))}
+        {['고마움', '미안함', '축하함', '반가움', '기쁨', '직접 입력'].map((content, index) => (
+          <EmotionBox
+            key={index}
+            content={content}
+            Icon={
+              content === '고마움' ? Thanks :
+              content === '미안함' ? Sorry :
+              content === '축하함' ? Congratulation :
+              content === '반가움' ? Delight :
+              content === '기쁨' ? Joy :
+              Question
+            }
+            isInput={content === '직접 입력'}
+            isSelected={selectedEmotion === index}
+            onClick={() => handleEmotionClick({ index, content })}
+          />
+        ))}
       </div>
+
 
       <div className='w-full h-5' />
       <div 
