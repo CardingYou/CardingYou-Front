@@ -26,13 +26,13 @@ export default function CardLetter() {
     }
 
   return (
-    <div className="flex w-full flex-col text-center justify-center bg-[url('assets/images/card_bg.png')] bg-cover bg-center'" id="download">
+    <div className="flex w-full flex-col text-center justify-center bg-[url('/assets/images/card_bg.png')] bg-cover bg-center'" id="download">
             <div className='flex justify-center'>
             <img src="/assets/images/carding_for_you.png" alt="carding_for_you" />
             </div>
             <div className='mt-4 flex justify-center'>
                 <div 
-                className={`relative w-[60%] pb-[79%] bg-white rounded-xl overflow-hidden ${flipped ? '' : `border-4 border-[#${response.selectedColor}]`}`}
+                className={`relative w-[60%] pb-[79%] bg-white rounded-xl overflow-hidden ${flipped ? '' : `border-4 border-[${response.selectedColor}]`}`}
                 onClick={() => setFlipped(!flipped)} 
                 style={{
                     perspective: '1000px'
@@ -51,10 +51,12 @@ export default function CardLetter() {
                         style={{
                             backfaceVisibility: 'hidden',
                             transform: 'rotateY(0deg)',
+                            scrollbarWidth: 'none',
+                            msOverflowStyle: 'none',
                         }}
                         id='textArea'
                     >
-                        <div className='py-10 px-5 text-black text-left font-xs whitespace-pre-wrap'>
+                        <div className='py-10 px-5 text-black text-left font-xs whitespace-pre-wrap overflow-scroll scrollbar-hide'>
                             {response.responseContent}
                         </div>
                     </div>
