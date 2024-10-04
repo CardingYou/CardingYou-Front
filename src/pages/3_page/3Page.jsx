@@ -2,13 +2,21 @@ import { useState } from 'react';
 import NextButton from '../../components/onePage/nextButton';
 import { ReactComponent as Button } from '../../assets/images/threePage/Button.svg';
 import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Loading from '../loading/Loading';
 
 function ThreePage() {
+    const location = useLocation();
+    const navigate = useNavigate(); 
+
+    const response = location.state; // 전달받은 imgUrl, parse data
+
     const colors = ['#FFADAD', '#FFC996', '#FFFB8F', '#B8FFA6', '#E4ABFF', '#9FC5FF'];
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedOption, setSelectedOption] = useState('direct');
     const [letterContent, setLetterContent] = useState('');
     const [responseContent, setResponseContent] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleColorClick = (color) => {
         setSelectedColor(color);
@@ -29,8 +37,23 @@ function ThreePage() {
         }
     };
 
+    // 편지지로 이동
+    const navigateLetter = () => {
+        if (response != null && responseContent !== '') {
+            setLoading(true); 
+            setTimeout(() => {
+                setLoading(false);
+                navigate('/card', { state: { ...response, responseContent, selectedColor } });
+            }, 2000); 
+        }
+    }
+
     return (
-      <div className='w-full h-full bg-white p-6'>
+      <div className='w-full h-full'>
+        {loading ? (
+                <Loading />
+            ) : (
+                <div className='w-full h-full bg-white p-6'>
           <div className='w-full h-10 flex items-center text-lg font-bold text-black'>
               편지를 적을 수 있습니다.
           </div>
@@ -101,8 +124,10 @@ function ThreePage() {
 
           <div className='w-full h-24' />
           <div className='fixed bottom-4 right-8 w-full h-20 flex items-center justify-end'>
-              <NextButton className="mb-4 mr-4" />
+              <NextButton className="mb-4 mr-4" onClick={navigateLetter}/>
           </div>
+          </div>
+            )}
       </div>
     );
 }

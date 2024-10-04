@@ -24,7 +24,7 @@ function App() {
         <Route path='/three' element={<ThreePage />} />
         <Route path="/loading" element={<Loading />} />
         <Route path="/card" element={<CardBox />} />
-        <Route path="/letter" element={<CardLetter />} />
+        <Route path="/letter/:randomPath" element={<CardLetter />} />
         
         <Route path="/testFirebase" element={<FirebaseTest />} />
       </Routes>

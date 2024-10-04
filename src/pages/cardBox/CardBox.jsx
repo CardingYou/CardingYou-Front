@@ -1,17 +1,19 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getCurrentDate } from '../../utils/date/getCurrentDate';
 
 export default function CardBox() {
   const navigate = useNavigate();
   const date = getCurrentDate();
 
+  const location = useLocation();
+  const response = location.state;
+
+  const start = response.imgURL.indexOf('userPersonalImg%') + 'userPersonalImg%'.length;
+  const end = response.imgURL.indexOf('?alt=');
+  const randomPath = response.imgURL.slice(start, end);
+
   const handleNavigate = () => {
-    const cardData = {
-        content: "사랑하는 엄마께, \n엄마, 안녕하세요?",
-        imageUrl: "assets/images/sample_letter_img.png",
-        date: date
-      };
-    navigate('/letter', { state: cardData }); // '/next-page'를 원하는 경로로 변경
+    navigate(`/letter/${randomPath}`, { state: { ...response, date } });
   };
 
   return (

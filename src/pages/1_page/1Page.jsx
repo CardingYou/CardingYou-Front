@@ -7,7 +7,7 @@ import { ReactComponent as Thanks } from '../../assets/images/onePage/thanks.svg
 import { ReactComponent as Sorry } from '../../assets/images/onePage/sorry.svg';
 import { ReactComponent as Congratulation } from '../../assets/images/onePage/congratulation.svg';
 import { ReactComponent as Delight } from '../../assets/images/onePage/delight.svg';
-import { ReactComponent as Joy } from '../../assets/images/onePage/Joy.svg';
+import { ReactComponent as Joy } from '../../assets/images/onePage/joy.svg';
 import { ReactComponent as Question } from '../../assets/images/onePage/question.svg';
 
 function OnePage() {

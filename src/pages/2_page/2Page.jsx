@@ -22,7 +22,6 @@ function TwoPage() {
     const navigate = useNavigate(); 
     const [uploadedImage, setUploadedImage] = useState(null);
     const [imageFile, setImageFile] = useState(null);
-    const [fbImgUrl, setfbImgUrl] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const fileInputRef = useRef(null);
 
@@ -51,9 +50,9 @@ function TwoPage() {
         setIsModalOpen(false);
     };
 
-    const postCardData = async () => {
+    const postCardData = async (downloadURL) => {
         // 이미지 URL이 존재하는지 확인
-        if (!fbImgUrl) {
+        if (!downloadURL) {
             console.error('Image URL not found. Make sure to upload the image first.');
             return;
         }
@@ -63,7 +62,7 @@ function TwoPage() {
                 target: target,          
                 sentiment: sentiment,    
                 type: type,              
-                image_url: fbImgUrl,     
+                image_url: downloadURL,     
             }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -72,8 +71,7 @@ function TwoPage() {
     
             if (response.status === 200) {
                 console.log('Successfully posted:', response.data);
-                // 데이터 전송 후 페이지 이동
-                navigate('/three');
+                navigate('/three', { state: response.data });
             } else {
                 console.error('Failed to post data:', response.statusText);
             }
@@ -95,10 +93,8 @@ function TwoPage() {
             console.log(`[uploadImgToFB] response -> ${uploadResult.metadata.fullPath}`);
 
             const downloadURL = await getDownloadURL(fileReference);
-            setfbImgUrl(downloadURL);
             console.log(`[uploadImgToFB] downloadURL-> ${downloadURL}`);
-            postCardData();
-            navigate('/three');
+            postCardData(downloadURL);
         } catch (error) {
             console.error("Error uploading file: ", error);
         }
