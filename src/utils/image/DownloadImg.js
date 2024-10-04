@@ -8,6 +8,15 @@ export const onClickDownloadImage = (flipped) => {
 
   let textArea;
   let originalTextAreaDisplay;
+  
+  // 요소 선택
+  const buttonsToExclude = target.querySelectorAll('button');
+  const imagesToFlip = target.querySelectorAll('img');
+
+  // 이미지 좌우 반전 - 이미지가 반전되어 저장되는 에러 fix
+  imagesToFlip.forEach((img) => {
+    img.style.transform = 'scaleX(-1)';
+  });
 
   // flipped가 true일 경우 textArea 숨기기
   if (flipped) {
@@ -46,5 +55,10 @@ export const onClickDownloadImage = (flipped) => {
     if (flipped && textArea) {
       textArea.style.display = originalTextAreaDisplay;
     }
+  });
+
+  // 좌우 반전 복원
+  imagesToFlip.forEach((img) => {
+    img.style.transform = '';
   });
 };
