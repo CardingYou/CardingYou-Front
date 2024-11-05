@@ -11,7 +11,8 @@ export default function CardLetter() {
     const navigate = useNavigate();
     const response = location.state; // navigate로 전달된 데이터 접근
 
-    console.log(response.imgURL);
+    console.log('이미지 url : '+response.imgURL);
+    console.log('카드 색상 : '+ response.selectedColor);
 
     if(!response || response == null || response == undefined) {
         alert("카드 데이터를 받아오는 데 실패하였습니다 ! ");
@@ -32,11 +33,12 @@ export default function CardLetter() {
             </div>
             <div className='mt-4 flex justify-center'>
                 <div 
-                className={`relative w-[60%] pb-[79%] bg-white rounded-xl overflow-hidden ${flipped ? '' : `border-4 border-[${response.selectedColor}]`}`}
-                onClick={() => setFlipped(!flipped)} 
-                style={{
-                    perspective: '1000px'
-                }}
+                    className="relative w-[60%] pb-[79%] bg-white rounded-xl overflow-hidden"
+                    onClick={() => setFlipped(!flipped)} 
+                    style={{
+                        perspective: '1000px',
+                        border: flipped ? 'none' : `4px solid ${response.selectedColor}`,
+                    }}
                 >
                     <div 
                         className={`absolute w-full h-full transition-transform duration-700`} 
@@ -70,6 +72,19 @@ export default function CardLetter() {
                     }}
                     >
                         <img className='absolute top-0 left-0 w-full h-full object-cover' src={response.imgURL} alt="카드 이미지" />
+                        
+                        {/* 표지 문구 임의로 생성함 */}
+                        <div 
+                            className="absolute w-full h-full flex items-center justify-center text-center p-4"
+                            style={{
+                                color: 'white',  
+                                fontSize: '1.5rem', 
+                                fontWeight: 'bold', 
+                                textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)', 
+                            }}
+                        >
+                            {response.phrase}
+                        </div>
                     </div>
                 </div>
             </div>
