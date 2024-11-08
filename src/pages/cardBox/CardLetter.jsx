@@ -11,9 +11,6 @@ export default function CardLetter() {
     const navigate = useNavigate();
     const response = location.state; // navigate로 전달된 데이터 접근
 
-    console.log('이미지 url : '+response.imgURL);
-    console.log('카드 색상 : '+ response.selectedColor);
-
     if(!response || response == null || response == undefined) {
         alert("카드 데이터를 받아오는 데 실패하였습니다 ! ");
         navigate("/"); // 처음으로 이동
@@ -81,6 +78,7 @@ export default function CardLetter() {
                                 fontSize: '1.5rem', 
                                 fontWeight: 'bold', 
                                 textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)', 
+                                display: flipped ? 'flex' : 'none'
                             }}
                         >
                             {response.phrase}

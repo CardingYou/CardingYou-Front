@@ -16,9 +16,8 @@ function App() {
   return (
     <>
     <Routes>
-        <Route path="/" element={<OnBoardingPage />} />
         <Route path="/sample" element={<SamplePage />} />
-        <Route path="/init" element={<InitPage />} />
+        <Route path="/" element={<InitPage />} />
         <Route path="/one" element={<OnePage />} />
         <Route path="/two" element={<TwoPage />} />
         <Route path='/three' element={<ThreePage />} />
