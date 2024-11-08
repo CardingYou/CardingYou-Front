@@ -27,9 +27,6 @@ export const onClickDownloadImage = (flipped) => {
     }
   }
 
-  // 버튼 영역 선택
-  const buttonsToExclude = document.querySelectorAll('button');
-
   // 버튼 다 숨기기
   const originalDisplayStyles = [];
   buttonsToExclude.forEach(button => {
@@ -38,7 +35,7 @@ export const onClickDownloadImage = (flipped) => {
   });
 
   // 이미지로 변환
-  html2canvas(target).then((canvas) => {
+  html2canvas(target, { useCORS: true }).then((canvas) => {
     const link = document.createElement("a");
     document.body.appendChild(link);
     link.href = canvas.toDataURL("image/png");
