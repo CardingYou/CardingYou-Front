@@ -22,6 +22,7 @@ function TwoPage() {
     const navigate = useNavigate(); 
     const [uploadedImage, setUploadedImage] = useState(null);
     const [imageFile, setImageFile] = useState(null);
+    const [phrase, setPhrase] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const fileInputRef = useRef(null);
 
@@ -51,18 +52,18 @@ function TwoPage() {
     };
 
     const postCardData = async (downloadURL) => {
-        // 이미지 URL이 존재하는지 확인
-        if (!downloadURL) {
+        // 이미지 URL이 존재하지 않을 경우 초기 이미지 URL을 설정
+        if (!downloadURL && !imageFile) {
             console.error('Image URL not found. Make sure to upload the image first.');
             return;
         }
     
         try {
-            const response = await axios.post('/api/create/phrase', {
+            const response = await axios.post(`/create/phrase`, {
                 target: target,          
                 sentiment: sentiment,    
                 type: type,              
-                image_url: downloadURL,     
+                image_url: downloadURL || '',   // downloadURL이 없을 경우 빈 문자열로 전달
             }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -71,6 +72,15 @@ function TwoPage() {
     
             if (response.status === 200) {
                 console.log('Successfully posted:', response.data);
+    
+                // response.data에 imgURL이 존재하고, imageFile이 없다면 imageFile을 설정
+                if (response.data.imgURL && !imageFile) {
+                    setImageFile(response.data.imgURL);
+                    console.log('이미지 url : '+imageFile);
+                }
+                setPhrase(response.data.phrase);
+                console.log("문구 : "+phrase);
+
                 navigate('/three', { state: response.data });
             } else {
                 console.error('Failed to post data:', response.statusText);
@@ -79,13 +89,14 @@ function TwoPage() {
             console.error('Error posting data:', error);
         }
     };
+    
 
     const uploadImgToFB = async () => {
 
-        if (!imageFile) {
-            console.error("[uploadImgToFB] 파일 없음");
-            return;
-        }
+        // if (!imageFile) {
+        //     console.error("[uploadImgToFB] 파일 없음");
+        //     return;
+        // }
         
         try {
             const fileReference = ref(storage, `userPersonalImg/${uuidv4()}`);
@@ -95,6 +106,7 @@ function TwoPage() {
             const downloadURL = await getDownloadURL(fileReference);
             console.log(`[uploadImgToFB] downloadURL-> ${downloadURL}`);
             postCardData(downloadURL);
+            console.log(downloadURL);
         } catch (error) {
             console.error("Error uploading file: ", error);
         }
