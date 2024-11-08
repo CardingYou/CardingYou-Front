@@ -35,7 +35,7 @@ export const onClickDownloadImage = (flipped) => {
   });
 
   // 이미지로 변환
-  html2canvas(target).then((canvas) => {
+  html2canvas(target, { useCORS: true }).then((canvas) => {
     const link = document.createElement("a");
     document.body.appendChild(link);
     link.href = canvas.toDataURL("image/png");
