@@ -11,7 +11,7 @@ function ThreePage() {
 
     const response = location.state; // 전달받은 imgUrl, parse data
 
-    const colors = ['#FFADAD', '#FFC996', '#FFFB8F', '#B8FFA6', '#E4ABFF', '#9FC5FF'][selectedColor];
+    const colors = ['#FFADAD', '#FFC996', '#FFFB8F', '#B8FFA6', '#E4ABFF', '#9FC5FF'];
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedOption, setSelectedOption] = useState('direct');
     const [letterContent, setLetterContent] = useState('');
@@ -29,7 +29,7 @@ function ThreePage() {
     const handleSubmit = async () => {
         const type = selectedOption === 'direct' ? 'custom' : 'AI';
         try {
-            const response = await axios.post(`/create/letter/type=${type}`, { context: letterContent });
+            const response = await axios.post(`/api/create/letter/type=${type}`, { context: letterContent });
             setResponseContent(response.data.letter); 
             console.log(response.data.letter);
         } catch (error) {

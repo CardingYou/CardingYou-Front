@@ -8,12 +8,18 @@ export default function CardBox() {
   const location = useLocation();
   const response = location.state;
 
-  const start = response.imgURL.indexOf('userPersonalImg%') + 'userPersonalImg%'.length;
+  let start;
+  if (response.imgURL.includes('userPersonalImg%')) {
+    start = response.imgURL.indexOf('userPersonalImg%') + 'userPersonalImg%'.length;
+  } else {
+    start = response.imgURL.indexOf('cardImg%') + 'cardImg%'.length;
+  }
   const end = response.imgURL.indexOf('?alt=');
   const randomPath = response.imgURL.slice(start, end);
 
   const handleNavigate = () => {
     navigate(`/letter/${randomPath}`, { state: { ...response, date } });
+    // navigate(`/letter/`);
   };
 
   return (

@@ -53,17 +53,17 @@ function TwoPage() {
 
     const postCardData = async (downloadURL) => {
         // 이미지 URL이 존재하지 않을 경우 초기 이미지 URL을 설정
-        if (!downloadURL && !imageFile) {
-            console.error('Image URL not found. Make sure to upload the image first.');
-            return;
-        }
+        // if (!downloadURL && !imageFile) {
+        //     console.error('Image URL not found. Make sure to upload the image first.');
+        //     return;
+        // }
     
         try {
-            const response = await axios.post(`/create/phrase`, {
+            const response = await axios.post(`/api/create/phrase`, {
                 target: target,          
                 sentiment: sentiment,    
                 type: type,              
-                image_url: downloadURL || '',   // downloadURL이 없을 경우 빈 문자열로 전달
+                image_url: downloadURL,   // downloadURL이 없을 경우 빈 문자열로 전달
             }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -93,10 +93,11 @@ function TwoPage() {
 
     const uploadImgToFB = async () => {
 
-        // if (!imageFile) {
-        //     console.error("[uploadImgToFB] 파일 없음");
-        //     return;
-        // }
+        if (!imageFile) {
+            console.log("[uploadImgToFB] 파일 없음");
+            postCardData(null);
+            return;
+        }
         
         try {
             const fileReference = ref(storage, `userPersonalImg/${uuidv4()}`);
