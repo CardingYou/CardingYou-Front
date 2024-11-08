@@ -27,9 +27,6 @@ export const onClickDownloadImage = (flipped) => {
     }
   }
 
-  // 버튼 영역 선택
-  const buttonsToExclude = document.querySelectorAll('button');
-
   // 버튼 다 숨기기
   const originalDisplayStyles = [];
   buttonsToExclude.forEach(button => {
