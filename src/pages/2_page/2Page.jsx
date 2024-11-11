@@ -59,7 +59,7 @@ function TwoPage() {
         // }
     
         try {
-            const response = await axios.post(`/api/create/phrase`, {
+            const response = await axios.post(`/create/phrase`, {
                 target: target,          
                 sentiment: sentiment,    
                 type: type,              
